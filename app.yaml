@@ -1,5 +1,8 @@
 runtime: python37
 
+env_variables:
+  TOITTA_ENV: production
+
 handlers:
 
 - url: /css

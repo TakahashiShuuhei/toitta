@@ -1,7 +1,6 @@
 # coding: utf-8
 from toitta.domain.tweet import TweetType
 from toitta.usecase.request import InvalidRequestObject
-from toitta.usecase.response import ResponseType
 from toitta.usecase.tweetadd.tweet_add_usecase import TweetAddRequest
 
 
@@ -9,7 +8,7 @@ class TestTweedAddRequest:
 
     def test_valid_request(self):
         adict = {
-            'type': TweetType.NORMAL,
+            'type': TweetType.NORMAL.value,
             'user_id': 123,
             'tweet': 'some tweet'
         }
@@ -18,7 +17,7 @@ class TestTweedAddRequest:
 
         assert isinstance(actual, TweetAddRequest)
         assert bool(actual) is True
-        assert actual.type == TweetType.NORMAL
+        assert actual.type == TweetType.NORMAL.value
         assert actual.user_id == 123
         assert actual.tweet == 'some tweet'
         assert actual.parent_id is None
@@ -38,7 +37,7 @@ class TestTweedAddRequest:
 
     def test_type_is_normal_and_tweet_is_missing(self):
         adict = {
-            'type': TweetType.NORMAL,
+            'type': TweetType.NORMAL.value,
             'user_id': 123
         }
 
@@ -52,7 +51,7 @@ class TestTweedAddRequest:
               + '0123456789012345678901234567890123456789' \
               + '0123456789012345678901234567890123456789'
         adict = {
-            'type': TweetType.NORMAL,
+            'type': TweetType.NORMAL.value,
             'user_id': 123,
             'tweet': tweet
         }
@@ -63,7 +62,7 @@ class TestTweedAddRequest:
 
     def test_user_id_is_missing(self):
         adict = {
-            'type': TweetType.NORMAL,
+            'type': TweetType.NORMAL.value,
             'tweet': 'some tweet'
         }
 

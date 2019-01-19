@@ -1,11 +1,20 @@
 # coding: utf-8
 
 import json
+import os
 
 from flask import Flask, make_response
 
+from toitta.flask_settings import DevConfig, ProdConfig
+from toitta.rest import tweet
+
 
 app = Flask(__name__)
+env_flag = os.environ.get('TOITTA_ENV', 'development')
+conf = {'development': DevConfig,
+        'prodction': ProdConfig}.get(env_flag, DevConfig)
+app.config.from_object(conf)
+app.register_blueprint(tweet.blueprint)
 
 
 @app.route('/api/v1/dummy', methods=['GET'])
