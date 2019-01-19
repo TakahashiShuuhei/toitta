@@ -1,0 +1,76 @@
+version: 2.1
+commands:
+  auth_gcloud:
+    steps:
+    - run:
+        name: auth gcloud
+        command: |
+          echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
+          gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
+          gcloud config set project $GCP_PROJECT
+
+jobs:
+  test-api:
+    environment:
+      TZ: "Asia/Tokyo"
+    docker:
+    - image: google/cloud-sdk
+    steps:
+    - checkout
+
+    - restore_cache:
+        keys:
+         - test-api-cache
+
+    - run:
+        name: install dependencies
+        command: |
+          apt install -y python3-venv
+          python3 -m venv env
+          source ./env/bin/activate
+          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
+
+    - run:
+        name: run tests
+        command: |
+          source ./env/bin/activate
+          export PYTHONPATH=$(pwd)
+          cd tests
+          pytest -v .
+
+    - save_cache: 
+        key: test-api-cache
+        paths:
+        - "env"
+
+  deploy:
+    environment:
+      TZ: "Asia/Tokyo"
+    docker:
+    - image: google/cloud-sdk
+    steps:
+    - checkout
+
+    - attach_workspace:
+        at: .
+
+    - auth_gcloud
+
+    - run: 
+        name: deploy app
+        command: |
+          gcloud app deploy --quiet
+      
+workflows:
+  build-and-deploy:
+    jobs:
+    - test-api
+    - deploy:
+        filters:
+          branches:
+            only:
+            - master
+        requires:
+        - test-api
+
