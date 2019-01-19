@@ -1,4 +1,6 @@
 # coding: utf-8
+import logging
+
 from toitta.domain.tweet import TweetType, TweetConstants, Tweet
 from toitta.usecase.request import ValidRequestObject, InvalidRequestObject
 from toitta.usecase.response import ResponseFailure, ResponseSuccess
@@ -24,7 +26,7 @@ class TweetAddRequest(ValidRequestObject):
             invalid_req.add_error('type', 'typeは必須です')
             return invalid_req
 
-        if 'tweet' not in adict and adict['type'] == TweetType.NORMAL:
+        if 'tweet' not in adict and adict['type'] == TweetType.NORMAL.value:
             invalid_req.add_error('tweet', 'つぶやきを指定してください')
 
         if len(adict.get('tweet', '')) > TweetConstants.MAX_LENGTH:
@@ -56,9 +58,10 @@ class TweetAddUseCase(object):
             # TODO parentの存在チェック
             tweet = self._build_tweet(request)
             tweet = self.repository.add_tweet(tweet)
-            response = ResponseSuccess(tweet)
+            response = ResponseSuccess(tweet.to_dict())
             return response
         except Exception as e:
+            logging.exception(e)
             return ResponseFailure.build_system_error(e)
 
     def _build_tweet(self, request):

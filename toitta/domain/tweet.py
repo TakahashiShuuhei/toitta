@@ -30,6 +30,16 @@ class Tweet(object):
         # TODO
         return []
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'tweet': self.tweet,
+            'type': self.type,
+            'user_id': self.user_id,
+            'parent_id': self.parent_id,
+            'created_at': self.created_at.isoformat()
+        }
+
 
 class TweetType(Enum):
     NORMAL = 'normal'

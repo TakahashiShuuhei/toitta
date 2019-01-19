@@ -2,7 +2,7 @@
 from enum import Enum
 
 
-class ResponseType(Enum):
+class ResponseType(str, Enum):
     SUCCESS = 'Success'
     RESOURCE_ERROR = 'ResourceError'
     PARAMETERS_ERROR = 'ParametersError'
