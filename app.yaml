@@ -2,6 +2,23 @@ runtime: python37
 
 handlers:
 
+- url: /css
+  static_dir: statics/css
+
+- url: /js
+  static_dir: statics/js
+
+- url: /img
+  static_dir: statics/img
+
+- url: /favicon.ico
+  static_files: statics/favicon.ico
+  upload: statics/favicon.ico
+
+- url: /
+  static_files: statics/index.html
+  upload: statics/index.html
+
 - url: /.*
   script: auto
 
