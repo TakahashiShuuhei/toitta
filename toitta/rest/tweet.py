@@ -16,5 +16,8 @@ def add_tweet():
     request_object = TweetAddRequest.from_dict(request.json)
     use_case = TweetAddUseCase(repository)
     response_object = use_case.execute(request_object)
+    body = response_object.value
+    if response_object:
+        body = body.to_dict()
     status_code = STATUS_CODES.get(response_object.type, 200)
-    return jsonify(response_object.value), status_code
+    return jsonify(body), status_code

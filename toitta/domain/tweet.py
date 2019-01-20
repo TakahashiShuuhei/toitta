@@ -3,7 +3,7 @@ from datetime import datetime
 from enum import Enum
 
 
-class Tweet(object):
+class Tweet:
     def __init__(self,
                  id,
                  tweet,

@@ -44,7 +44,7 @@ class TweetAddRequest(ValidRequestObject):
                    parent_id=adict.get('parent_id'))
 
 
-class TweetAddUseCase(object):
+class TweetAddUseCase:
 
     def __init__(self, repository):
         self.repository = repository
@@ -58,7 +58,7 @@ class TweetAddUseCase(object):
             # TODO parentの存在チェック
             tweet = self._build_tweet(request)
             tweet = self.repository.add_tweet(tweet)
-            response = ResponseSuccess(tweet.to_dict())
+            response = ResponseSuccess(tweet)
             return response
         except Exception as e:
             logging.exception(e)
