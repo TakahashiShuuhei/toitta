@@ -1,8 +1,6 @@
 # coding: utf-8
 from unittest import mock
 
-import pytest
-
 from toitta.domain.tweet import TweetType, Tweet
 from toitta.usecase.request import InvalidRequestObject
 from toitta.usecase.response import ResponseSuccess, ResponseFailure, ResponseType
@@ -78,7 +76,7 @@ class TestTweedAddRequest:
 
 class TestTweetAddUseCase:
 
-    def test_tweet_add_ok(self, ):
+    def test_tweet_add_ok(self):
         repo = mock.Mock()
         tweet = Tweet(id=333,
                       user_id=123,
