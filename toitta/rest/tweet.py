@@ -7,7 +7,7 @@ from toitta.rest import STATUS_CODES
 from toitta.usecase.tweetadd.tweet_add_usecase import TweetAddRequest, TweetAddUseCase
 
 
-blueprint = Blueprint('room', __name__)
+blueprint = Blueprint('tweet', __name__)
 
 
 @blueprint.route('/api/v1/tweet', methods=['POST'])
