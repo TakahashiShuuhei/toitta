@@ -14,6 +14,9 @@ handlers:
 - url: /img
   static_dir: statics/img
 
+- url: /fonts
+  static_dir: statics/fonts
+
 - url: /favicon.ico
   static_files: statics/favicon.ico
   upload: statics/favicon.ico

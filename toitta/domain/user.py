@@ -26,6 +26,20 @@ class User:
         self.created_at = created_at if created_at else datetime.now()
         self.modified_at = modified_at if modified_at else datetime.now()
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            # 'password': self.password,
+            'description': self.description,
+            'following': self.following,
+            'icon': self.icon,
+            'background': self.background,
+            'created_at': self.created_at.isoformat(),  # TODO Presenter
+            'modified_at': self.modified_at.isoformat()
+        }
+
 
 class UserConstants:
     MIN_NAME_LENGTH = 3

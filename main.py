@@ -5,7 +5,7 @@ import os
 from flask import Flask
 
 from toitta.flask_settings import DevConfig, ProdConfig
-from toitta.rest import tweet
+from toitta.rest import tweet, user
 
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ conf = {'development': DevConfig,
         'production': ProdConfig}.get(env_flag, DevConfig)
 app.config.from_object(conf)
 app.register_blueprint(tweet.blueprint)
+app.register_blueprint(user.blueprint)
 
 
 if __name__ == '__main__':
