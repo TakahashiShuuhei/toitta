@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Notification from './views/Notification.vue'
+import Message from './views/Message.vue'
 
 Vue.use(Router)
 
@@ -10,6 +12,16 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/notification',
+      name: 'notification',
+      component: Notification
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: Message
     },
     {
       path: '/about',
