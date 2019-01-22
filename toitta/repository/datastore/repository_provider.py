@@ -3,6 +3,7 @@ import os
 
 from toitta.flask_settings import DevConfig, ProdConfig
 from toitta.repository.datastore.tweet_repository import TweetRepository
+from toitta.repository.datastore.user_repository import UserRepository
 
 
 class DatastoreRepositoryProvider:
@@ -17,6 +18,9 @@ class DatastoreRepositoryProvider:
 
     def tweet_repository(self):
         return TweetRepository.get_instance(self.config)
+
+    def user_repository(self):
+        return UserRepository.get_instance(self.config)
 
 
 repository_provider = DatastoreRepositoryProvider()

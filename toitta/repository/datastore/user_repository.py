@@ -3,7 +3,7 @@
 from google.cloud import datastore
 
 
-class TweetRepository:
+class UserRepository:
     _instances = {}
 
     def __init__(self, env):
@@ -14,20 +14,23 @@ class TweetRepository:
     @classmethod
     def get_instance(cls, env):
         if env.ENV not in cls._instances:
-            cls._instances[env.ENV] = TweetRepository(env)
+            cls._instances[env.ENV] = UserRepository(env)
         return cls._instances[env.ENV]
 
-    def add_tweet(self, tweet):
-        key = self.client.key('Tweet')
+    def add_user(self, user):
+        key = self.client.key('User')
         entity = datastore.Entity(key)
         entity.update({
-            'user_id': tweet.user_id,
-            'parent_id': tweet.parent_id,
-            'tweet': tweet.tweet,
-            'type': tweet.type,
-            'created_at': tweet.created_at
+            'name': user.name,
+            'email': user.email,
+            'password': user.password,
+            'description': user.description,
+            'following': user.following,
+            'created_at': user.created_at,
+            'modified_at': user.modified_at
         })
 
         self.client.put(entity)
-        tweet.id = entity.key.id
-        return tweet
+        user.id = user.key.id
+        return user
+
